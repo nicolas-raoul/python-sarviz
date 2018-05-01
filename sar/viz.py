@@ -96,7 +96,7 @@ class Visualization(object):
             num_plots += 2
 
         self.num_plots = num_plots
-        self.fig_height = num_plots * 4
+        self.fig_height = num_plots * 4 * 4
 
     def _preprocess_sar_data(self):
         for t in Visualization.SAR_TYPES:
@@ -162,6 +162,7 @@ class Visualization(object):
         plt_idx = 1
         fig = plt.figure()
         fig.set_figheight(self.fig_height)
+        fig.set_figwidth(self.fig_height)
 
         plt.clf()
         plt.subplots_adjust(wspace=1, hspace=1)
@@ -175,6 +176,10 @@ class Visualization(object):
             plt.xlabel('time')
             plt.ylabel('% usage')
             plt.title('CPU Usage')
+
+            # Vertical axis at specific time
+            plt.axvline(x=12*60, color='#FF0000')
+
             lg = plt.legend(frameon=False)
             lg_txts = lg.get_texts()
             plt.setp(lg_txts, fontsize=10)
