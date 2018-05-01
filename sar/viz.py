@@ -158,6 +158,7 @@ class Visualization(object):
                     else:
                         self.kb_trans_per_sec[iface].append(dp[iface]['txkB'])
 
+
     def save(self, output_path, output_type=PDF_OUTPUT):
         plt_idx = 1
         fig = plt.figure()
@@ -166,6 +167,10 @@ class Visualization(object):
 
         plt.clf()
         plt.subplots_adjust(wspace=1, hspace=1)
+
+        highlight = True
+        highlight_time = 12*60 # Noon
+        highlight_color = '#FF0000' # Red
 
         if self.enable_cpu:
             plt.subplot(self.num_plots, 1, plt_idx)
@@ -176,9 +181,8 @@ class Visualization(object):
             plt.xlabel('time')
             plt.ylabel('% usage')
             plt.title('CPU Usage')
-
-            # Vertical axis at specific time
-            plt.axvline(x=12*60, color='#FF0000')
+            if highlight:
+                plt.axvline(x=highlight_time, color=highlight_color) # Highlight a particular time with a vertical axis
 
             lg = plt.legend(frameon=False)
             lg_txts = lg.get_texts()
@@ -193,6 +197,9 @@ class Visualization(object):
             plt.xlabel('time')
             plt.ylabel('% mem used')
             plt.title('Percentage of Memory Used')
+            if highlight:
+                plt.axvline(x=highlight_time, color=highlight_color) # Highlight a particular time with a vertical axis
+
             lg = plt.legend(frameon=False)
             lg_txts = lg.get_texts()
             plt.setp(lg_txts, fontsize=10)
@@ -206,6 +213,8 @@ class Visualization(object):
             plt.xlabel('time')
             plt.ylabel('Mem Usage (MB)')
             plt.title('Memory Usage')
+            if highlight:
+                plt.axvline(x=highlight_time, color=highlight_color) # Highlight a particular time with a vertical axis
 
             # lc_handle = mpatches.Patch(color='lemonchiffon', label='Buffered Memory')
             # nw_handle = mpatches.Patch(color='navajowhite', label='Cached Memory')
@@ -229,6 +238,8 @@ class Visualization(object):
             plt.xlabel('time')
             plt.ylabel('faults/s')
             plt.title('Page Faults')
+            if highlight:
+                plt.axvline(x=highlight_time, color=highlight_color) # Highlight a particular time with a vertical axis
             lg = plt.legend(frameon=False)
             lg_txts = lg.get_texts()
             plt.setp(lg_txts, fontsize=10)
@@ -242,6 +253,8 @@ class Visualization(object):
             plt.xlabel('time')
             plt.ylabel('KB/s')
             plt.title('Page Ins and Outs')
+            if highlight:
+                plt.axvline(x=highlight_time, color=highlight_color) # Highlight a particular time with a vertical axis
             lg = plt.legend(frameon=False)
             lg_txts = lg.get_texts()
             plt.setp(lg_txts, fontsize=10)
@@ -258,6 +271,8 @@ class Visualization(object):
             plt.xlabel('time')
             plt.ylabel('KB/s')
             plt.title('Network Usage')
+            if highlight:
+                plt.axvline(x=highlight_time, color=highlight_color) # Highlight a particular time with a vertical axis
             lg = plt.legend(loc=1,
                             ncol=len(self.kb_rcv_per_sec.keys()), frameon=False)
             lg.get_frame().set_alpha(0)
@@ -274,6 +289,8 @@ class Visualization(object):
             plt.xlabel('time')
             plt.ylabel('blocks/s')
             plt.title('Disk IO')
+            if highlight:
+                plt.axvline(x=highlight_time, color=highlight_color) # Highlight a particular time with a vertical axis
             lg = plt.legend(frameon=False)
             lg_txts = lg.get_texts()
             plt.setp(lg_txts, fontsize=10)
